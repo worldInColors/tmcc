@@ -38,6 +38,96 @@ const farms: Farm[] = [
     credits: "Hungrsy",
     version: "1.10+",
   },
+  {
+    farmName: "500k iron farm",
+    rates: "500,000/hr",
+    credits: "Samuel",
+    version: "1.19+",
+  },
+  {
+    farmName: "400k magma farm",
+    rates: "400,000/hr",
+    credits: "Samantha",
+    version: "1.16+",
+  },
+  {
+    farmName: "300k iron farm",
+    rates: "300,000/hr",
+    credits: "Catsus",
+    version: "1.11+",
+  },
+  {
+    farmName: "10m gold farm",
+    rates: "10,000,000/h",
+    credits: "Bread",
+    version: "1.21+",
+  },
+  {
+    farmName: "1k iron farm",
+    rates: "1,000/hr",
+    credits: "Hungrsy",
+    version: "1.10+",
+  },
+  {
+    farmName: "500k iron farm",
+    rates: "500,000/hr",
+    credits: "Samuel",
+    version: "1.19+",
+  },
+  {
+    farmName: "400k magma farm",
+    rates: "400,000/hr",
+    credits: "Samantha",
+    version: "1.16+",
+  },
+  {
+    farmName: "300k iron farm",
+    rates: "300,000/hr",
+    credits: "Catsus",
+    version: "1.11+",
+  },
+  {
+    farmName: "10m gold farm",
+    rates: "10,000,000/h",
+    credits: "Bread",
+    version: "1.21+",
+  },
+  {
+    farmName: "1k iron farm",
+    rates: "1,000/hr",
+    credits: "Hungrsy",
+    version: "1.10+",
+  },
+  {
+    farmName: "500k iron farm",
+    rates: "500,000/hr",
+    credits: "Samuel",
+    version: "1.19+",
+  },
+  {
+    farmName: "400k magma farm",
+    rates: "400,000/hr",
+    credits: "Samantha",
+    version: "1.16+",
+  },
+  {
+    farmName: "300k iron farm",
+    rates: "300,000/hr",
+    credits: "Catsus",
+    version: "1.11+",
+  },
+  {
+    farmName: "10m gold farm",
+    rates: "10,000,000/h",
+    credits: "Bread",
+    version: "1.21+",
+  },
+  {
+    farmName: "1k iron farm",
+    rates: "1,000/hr",
+    credits: "Hungrsy",
+    version: "1.10+",
+  },
 ];
 
 function FarmsList() {

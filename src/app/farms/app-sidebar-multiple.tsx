@@ -22,10 +22,10 @@ type Category = {
 // Custom animated collapsible menu item
 const AnimatedCollapsibleMenuItem = ({
   category,
-  isOpen = false,
-  onToggle,
+  isDefaultOpen = false,
   activeSubCategory = null,
 }) => {
+  const [isOpen, setIsOpen] = useState(isDefaultOpen);
   const submenuRef = useRef(null);
   const chevronRef = useRef(null);
   const subItemsRef = useRef([]);
@@ -137,9 +137,9 @@ const AnimatedCollapsibleMenuItem = ({
     };
   }, [isOpen]);
 
-  const handleToggle = useCallback(() => {
-    onToggle(category.name);
-  }, [category.name, onToggle]);
+  const toggleOpen = useCallback(() => {
+    setIsOpen((prev) => !prev);
+  }, []);
 
   const setSubItemRef = useCallback((el, index) => {
     if (el) {
@@ -150,7 +150,7 @@ const AnimatedCollapsibleMenuItem = ({
   return (
     <SidebarMenuItem>
       <SidebarMenuButton
-        onClick={handleToggle}
+        onClick={toggleOpen}
         className="w-full justify-between"
       >
         <span>{category.name}</span>
@@ -253,14 +253,8 @@ const categories: Category[] = [
 ];
 
 export function AppSidebar() {
-  const [openCategory, setOpenCategory] = useState("Monsters");
-
-  const handleToggle = useCallback((categoryName) => {
-    setOpenCategory((prev) => (prev === categoryName ? null : categoryName));
-  }, []);
-
   return (
-    <Sidebar className="mt-[81px]">
+    <Sidebar className="">
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupContent>
@@ -269,8 +263,7 @@ export function AppSidebar() {
                 <AnimatedCollapsibleMenuItem
                   key={category.name}
                   category={category}
-                  isOpen={openCategory === category.name}
-                  onToggle={handleToggle}
+                  isDefaultOpen={category.name === "Monsters"}
                   activeSubCategory="overworld-monsters"
                 />
               ))}
