@@ -1,5 +1,9 @@
+import { FilterIcon } from "lucide-react";
 import FarmCard from "./farm-card";
 import SearchBar from "./SearchBar";
+import { small } from "framer-motion/client";
+import { DrawerTrigger } from "@/components/ui/drawer";
+import FilterDrawer from "./FilterDrawer";
 interface Farm {
   farmName: string;
   rates: string;
@@ -139,7 +143,10 @@ function FarmsList() {
         farms to complex automated systems. Find inspiration and schematics for
         your next build.
       </p>
-      <SearchBar />
+      <div className="flex items-end gap-2">
+        <SearchBar />
+        <FilterDrawer />
+      </div>
       <ul className="grid lg:grid-cols-4 gap-4 mt-4 md:grid-cols-3 sm:grid-cols-2">
         {farms.map((farm: Farm, index: number) => (
           <FarmCard farm={farm} key={farm.farmName} index={index} />

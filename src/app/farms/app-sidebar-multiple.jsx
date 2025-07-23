@@ -14,10 +14,6 @@ import {
 } from "@/components/ui/sidebar";
 
 // Types
-type Category = {
-  name: string;
-  subCategories: string[];
-};
 
 // Custom animated collapsible menu item
 const AnimatedCollapsibleMenuItem = ({
@@ -184,7 +180,7 @@ const AnimatedCollapsibleMenuItem = ({
 };
 
 // Menu items
-const categories: Category[] = [
+const categories = [
   {
     name: "Monsters",
     subCategories: [
@@ -254,7 +250,7 @@ const categories: Category[] = [
 
 export function AppSidebar() {
   return (
-    <Sidebar className="">
+    <Sidebar className="mt-[71.5px] mb-[282px]">
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupContent>

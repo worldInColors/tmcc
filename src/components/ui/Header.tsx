@@ -1,6 +1,7 @@
 "use client";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import Image from "next/image";
 import Link from "next/link";
 import React, { useState, useEffect } from "react";
 
@@ -37,20 +38,14 @@ function Header() {
   }, [isMenuOpen]);
 
   return (
-    <nav className="flex p-4 bg-card border-b border-border items-center justify-between sticky top-0 z-50">
+    <nav className="flex p-4 pt-1 pb-1 pl-0 bg-card border-b border-border items-center justify-between sticky top-0 z-50">
       <div className="flex items-center gap-2">
-        <Link href="/" onClick={closeMenu}>
-          <Avatar className="w-12 h-12">
-            <AvatarImage src="/archive_logo5.webp" />
-            <AvatarFallback>Logo</AvatarFallback>
-          </Avatar>
-        </Link>
         <Link
           href="/"
           onClick={closeMenu}
           className="font-bold text-2xl transition-colors duration-300 hover:text-muted-foreground"
         >
-          TMCC
+          <Image src="/archive_logo.webp" width={250} height={83} alt="Logo" />
         </Link>
       </div>
 
