@@ -5,11 +5,10 @@ import { gsap } from "gsap";
 import Link from "next/link";
 
 export default function Home() {
-  const containerRef = useRef(null);
-  const headingRef = useRef(null);
-  const testRef = useRef(null);
-  const paragraphRef = useRef(null);
-  const buttonRef = useRef(null);
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const headingRef = useRef<HTMLHeadingElement | null>(null);
+  const paragraphRef = useRef<HTMLParagraphElement | null>(null);
+  const buttonRef = useRef<HTMLButtonElement | null>(null);
 
   useGSAP(() => {
     const tl = gsap.timeline();
@@ -45,22 +44,6 @@ export default function Home() {
       "+=0.1"
     );
 
-    // Test div animation
-    tl.fromTo(
-      testRef.current,
-      {
-        opacity: 0,
-        y: 20,
-      },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 0.5,
-        ease: "power2.out",
-      },
-      "-=0.4"
-    );
-
     // Paragraph animation
     tl.fromTo(
       paragraphRef.current,
@@ -94,7 +77,11 @@ export default function Home() {
     );
 
     // Hover animations
-    const setupHover = (element, hoverScale = 1.05, normalScale = 1) => {
+    const setupHover = (
+      element: HTMLElement | null,
+      hoverScale = 1.05,
+      normalScale = 1
+    ) => {
       if (!element) return () => {};
 
       const handleMouseEnter = () => {
@@ -117,10 +104,8 @@ export default function Home() {
       element.addEventListener("mouseleave", handleMouseLeave);
 
       return () => {
-        if (element) {
-          element.removeEventListener("mouseenter", handleMouseEnter);
-          element.removeEventListener("mouseleave", handleMouseLeave);
-        }
+        element.removeEventListener("mouseenter", handleMouseEnter);
+        element.removeEventListener("mouseleave", handleMouseLeave);
       };
     };
 
