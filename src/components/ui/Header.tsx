@@ -4,6 +4,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useState, useEffect } from "react";
+import SearchBar from "./Searchbar";
 
 interface HamburgerButtonProps {
   isMenuOpen: boolean;
@@ -51,6 +52,7 @@ function Header() {
 
       {/* Desktop Menu */}
       <div className="hidden sm:flex items-center gap-4">
+        <SearchBar />
         <NavLink href="/farms">Explore</NavLink>
         <NavLink href="/farms">FAQ</NavLink>
         <NavLink href="/farms">About</NavLink>
@@ -164,9 +166,8 @@ const MobileMenuSidebar = ({
 };
 const JoinDiscord = () => {
   return (
-    <button className="bg-[#4752c4] flex items-center p-3 gap-2 rounded-2xl cursor-pointer transition-colors duration-300 hover:bg-[#39429d]">
+    <button className=" flex items-center p-1 gap-2 rounded-2xl cursor-pointer transition-colors duration-300 hover:bg-[#39429d]">
       <DiscordIcon />
-      <span>Join Discord Server</span>
     </button>
   );
 };

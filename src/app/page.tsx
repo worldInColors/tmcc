@@ -1,66 +1,203 @@
 "use client";
-import { motion } from "framer-motion";
+import { useRef } from "react";
+import { useGSAP } from "@gsap/react";
+import { gsap } from "gsap";
 import Link from "next/link";
 
 export default function Home() {
+  const containerRef = useRef(null);
+  const headingRef = useRef(null);
+  const testRef = useRef(null);
+  const paragraphRef = useRef(null);
+  const buttonRef = useRef(null);
+
+  useGSAP(() => {
+    const tl = gsap.timeline();
+
+    // Container animation
+    tl.fromTo(
+      containerRef.current,
+      {
+        opacity: 0,
+        scale: 0.95,
+      },
+      {
+        opacity: 1,
+        scale: 1,
+        duration: 0.5,
+        ease: "power2.out",
+      }
+    );
+
+    // Heading animation
+    tl.fromTo(
+      headingRef.current,
+      {
+        opacity: 0,
+        y: -20,
+      },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.5,
+        ease: "power2.out",
+      },
+      "+=0.1"
+    );
+
+    // Test div animation
+    tl.fromTo(
+      testRef.current,
+      {
+        opacity: 0,
+        y: 20,
+      },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.5,
+        ease: "power2.out",
+      },
+      "-=0.4"
+    );
+
+    // Paragraph animation
+    tl.fromTo(
+      paragraphRef.current,
+      {
+        opacity: 0,
+        y: 20,
+      },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.5,
+        ease: "power2.out",
+      },
+      "+=0.05"
+    );
+
+    // Button animation
+    tl.fromTo(
+      buttonRef.current,
+      {
+        opacity: 0,
+        scale: 0.9,
+      },
+      {
+        opacity: 1,
+        scale: 1,
+        duration: 0.2,
+        ease: "power2.out",
+      },
+      "+=0.05"
+    );
+
+    // Hover animations
+    const setupHover = (element, hoverScale = 1.05, normalScale = 1) => {
+      if (!element) return () => {};
+
+      const handleMouseEnter = () => {
+        gsap.to(element, {
+          scale: hoverScale,
+          duration: 0.3,
+          ease: "power2.out",
+        });
+      };
+
+      const handleMouseLeave = () => {
+        gsap.to(element, {
+          scale: normalScale,
+          duration: 0.3,
+          ease: "power2.out",
+        });
+      };
+
+      element.addEventListener("mouseenter", handleMouseEnter);
+      element.addEventListener("mouseleave", handleMouseLeave);
+
+      return () => {
+        if (element) {
+          element.removeEventListener("mouseenter", handleMouseEnter);
+          element.removeEventListener("mouseleave", handleMouseLeave);
+        }
+      };
+    };
+
+    // Button tap animation
+    const handleMouseDown = () => {
+      gsap.to(buttonRef.current, {
+        scale: 0.98,
+        duration: 0.1,
+        ease: "power2.out",
+      });
+    };
+
+    const handleMouseUp = () => {
+      gsap.to(buttonRef.current, {
+        scale: 1.05,
+        duration: 0.1,
+        ease: "power2.out",
+      });
+    };
+
+    // Setup hover effects
+    const cleanupHeading = setupHover(headingRef.current, 1.02, 1);
+    const cleanupButton = setupHover(buttonRef.current, 1.05, 1);
+
+    // Setup button tap
+    if (buttonRef.current) {
+      buttonRef.current.addEventListener("mousedown", handleMouseDown);
+      buttonRef.current.addEventListener("mouseup", handleMouseUp);
+    }
+
+    // Cleanup function
+    return () => {
+      cleanupHeading();
+      cleanupButton();
+      if (buttonRef.current) {
+        buttonRef.current.removeEventListener("mousedown", handleMouseDown);
+        buttonRef.current.removeEventListener("mouseup", handleMouseUp);
+      }
+    };
+  }, []);
+
   return (
-    <div className="flex items-center justify-center px-4 py-4 ">
-      <motion.div
-        className="w-full max-w-[1000px] min-h-[600px] gap-2 flex flex-col items-center justify-center bg-cover bg-center text-white rounded-lg h"
+    <div className="flex items-center justify-center px-4 py-4">
+      <div
+        ref={containerRef}
+        className="w-full max-w-[1000px] min-h-[600px] gap-2 flex flex-col items-center justify-center bg-cover bg-center text-white rounded-lg"
         style={{
           backgroundImage: `
             linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.5)),
             url('/Hero.jpg')
           `,
         }}
-        initial={{ opacity: 0, scale: 0.95 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.5, ease: "easeOut" }}
       >
-        <motion.h1
-          className="text-4xl font-bold"
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{
-            duration: 0.5,
-            delay: 0.1,
-            ease: "easeOut",
-          }}
-          whileHover={{ scale: 1.02 }}
+        <h1
+          ref={headingRef}
+          className="text-xl sm:text-2xl md:text-3xl lg:text-4xl cursor-pointer text-center px-4 sm:px-0"
         >
           Welcome to the Minecraft Farm Archives
-        </motion.h1>
+        </h1>
 
-        <motion.p
-          className="text-lg font-semibold"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{
-            duration: 0.5,
-            delay: 0.15,
-            ease: "easeOut",
-          }}
+        <p
+          ref={paragraphRef}
+          className="text-sm sm:text-base lg:text-lg font-semibold text-center px-4 sm:px-0"
         >
           Discover the history and evolution of Minecraft farms, from simple
           designs to complex automated systems.
-        </motion.p>
+        </p>
+
         <Link href="/farms">
-          <motion.button
+          <button
+            ref={buttonRef}
             className="bg-card text-secondary-foreground shadow-xs h-10 rounded-md px-6 has-[>svg]:px-4 hover:bg-card/80 transition-colors duration-200 cursor-pointer"
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{
-              duration: 0.2,
-              delay: 0.2,
-              ease: "easeOut",
-            }}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.98 }}
           >
             Explore the archive
-          </motion.button>
+          </button>
         </Link>
-      </motion.div>
+      </div>
     </div>
   );
 }

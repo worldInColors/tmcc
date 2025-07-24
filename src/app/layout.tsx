@@ -41,10 +41,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${spaceGrotesk.variable} dark`}>
-      <body className="font-space antialiased  bg-background  ">
+      <body className="font-space-grotesk antialiased bg-background">
         <Header />
         <main className="min-h-screen">{children}</main>
-        {/* <Footer /> */}
+        <Footer />
       </body>
     </html>
   );
