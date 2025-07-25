@@ -1,8 +1,5 @@
-import { FilterIcon } from "lucide-react";
 import FarmCard from "./farm-card";
 import SearchBar from "./SearchBar";
-import { small } from "framer-motion/client";
-import { DrawerTrigger } from "@/components/ui/drawer";
 import FilterDrawer from "./FilterDrawer";
 interface Farm {
   farmName: string;

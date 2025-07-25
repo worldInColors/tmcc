@@ -3,6 +3,7 @@ import { Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/ui/Header";
 import Footer from "@/components/ui/Footer";
+import SearchModal from "@/components/ui/SearchModal";
 
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-space-grotesk",
@@ -42,6 +43,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${spaceGrotesk.variable} dark`}>
       <body className="font-space-grotesk antialiased bg-background pb-[71px] md:pb-0">
+        <SearchModal />
         <Header />
         <main className="min-h-screen">{children}</main>
         <Footer />

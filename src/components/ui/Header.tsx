@@ -2,26 +2,13 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import React, { useState, useEffect } from "react";
 import SearchBar from "./Searchbar";
 import Dock from "./Dock";
 
-interface HamburgerButtonProps {
-  isMenuOpen: boolean;
-  setIsMenuOpen: React.Dispatch<React.SetStateAction<boolean>>;
-}
-interface MobileMenuSidebarProps {
-  isMenuOpen: boolean;
-  closeMenu: () => void;
-}
-interface MobileOverlayProps {
-  isMenuOpen: boolean;
-  closeMenu: () => void;
-}
 function Header() {
   return (
     <>
-      <nav className="hidden md:flex flex p-4 pt-1 pb-1 pl-0 bg-card border-b border-border items-center justify-between sticky top-0 z-50">
+      <nav className="hidden md:flex  p-4 pt-1 pb-1 pl-0 bg-card border-b border-border items-center justify-between sticky top-0 z-50">
         <div className="flex items-center gap-2">
           <Link
             href="/"
