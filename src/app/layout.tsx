@@ -41,7 +41,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${spaceGrotesk.variable} dark`}>
-      <body className="font-space-grotesk antialiased bg-background">
+      <body className="font-space-grotesk antialiased bg-background pb-[71px] md:pb-0">
         <Header />
         <main className="min-h-screen">{children}</main>
         <Footer />

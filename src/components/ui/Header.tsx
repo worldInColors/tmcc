@@ -1,10 +1,10 @@
 "use client";
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useState, useEffect } from "react";
 import SearchBar from "./Searchbar";
+import Dock from "./Dock";
 
 interface HamburgerButtonProps {
   isMenuOpen: boolean;
@@ -19,54 +19,33 @@ interface MobileOverlayProps {
   closeMenu: () => void;
 }
 function Header() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const closeMenu = () => {
-    setIsMenuOpen(false);
-  };
-
-  // Disable body scroll when menu is open
-  useEffect(() => {
-    if (isMenuOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "unset";
-    }
-
-    // Cleanup on component unmount
-    return () => {
-      document.body.style.overflow = "unset";
-    };
-  }, [isMenuOpen]);
-
   return (
-    <nav className="flex p-4 pt-1 pb-1 pl-0 bg-card border-b border-border items-center justify-between sticky top-0 z-50">
-      <div className="flex items-center gap-2">
-        <Link
-          href="/"
-          onClick={closeMenu}
-          className="font-bold text-2xl transition-colors duration-300 hover:text-muted-foreground"
-        >
-          <Image src="/archive_logo.webp" width={250} height={83} alt="Logo" />
-        </Link>
-      </div>
+    <>
+      <nav className="hidden md:flex flex p-4 pt-1 pb-1 pl-0 bg-card border-b border-border items-center justify-between sticky top-0 z-50">
+        <div className="flex items-center gap-2">
+          <Link
+            href="/"
+            className="font-bold text-2xl transition-colors duration-300 hover:text-muted-foreground"
+          >
+            <Image
+              src="/archive_logo.webp"
+              width={250}
+              height={83}
+              alt="Logo"
+            />
+          </Link>
+        </div>
+        <div className="hidden md:flex items-center gap-4">
+          <SearchBar />
+          <NavLink href="/farms">Explore</NavLink>
+          <NavLink href="/farms">FAQ</NavLink>
+          <NavLink href="/farms">About</NavLink>
+          <JoinDiscord />
+        </div>
+      </nav>
 
-      {/* Desktop Menu */}
-      <div className="hidden sm:flex items-center gap-4">
-        <SearchBar />
-        <NavLink href="/farms">Explore</NavLink>
-        <NavLink href="/farms">FAQ</NavLink>
-        <NavLink href="/farms">About</NavLink>
-        <JoinDiscord />
-      </div>
-
-      <HamburgerButton isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />
-
-      {/* Mobile Menu Overlay */}
-      <MobileOverlay isMenuOpen={isMenuOpen} closeMenu={closeMenu} />
-
-      {/* Mobile Menu Sidebar */}
-      <MobileMenuSidebar isMenuOpen={isMenuOpen} closeMenu={closeMenu} />
-    </nav>
+      <Dock />
+    </>
   );
 }
 
@@ -86,84 +65,7 @@ const NavLink = ({
     </Link>
   );
 };
-const MobileOverlay = ({ isMenuOpen, closeMenu }: MobileOverlayProps) => {
-  return (
-    <div
-      className={`sm:hidden fixed inset-0 backdrop-blur-sm bg-background/20 z-30 transition-all duration-300 ${
-        isMenuOpen ? "opacity-100 visible" : "opacity-0 invisible"
-      }`}
-      onClick={closeMenu}
-    ></div>
-  );
-};
-const HamburgerButton = ({
-  isMenuOpen,
-  setIsMenuOpen,
-}: HamburgerButtonProps) => {
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
 
-  return (
-    <button
-      className="sm:hidden z-50 relative flex flex-col justify-center items-center w-8 h-8 space-y-1.5"
-      onClick={toggleMenu}
-      aria-label="Toggle menu"
-    >
-      <span
-        className={`block w-6 h-0.5 bg-foreground transition-all duration-300 ease-in-out ${
-          isMenuOpen ? "rotate-45 translate-y-2" : ""
-        }`}
-      ></span>
-      <span
-        className={`block w-6 h-0.5 bg-foreground transition-all duration-300 ease-in-out ${
-          isMenuOpen ? "opacity-0" : ""
-        }`}
-      ></span>
-      <span
-        className={`block w-6 h-0.5 bg-foreground transition-all duration-300 ease-in-out ${
-          isMenuOpen ? "-rotate-45 -translate-y-2" : ""
-        }`}
-      ></span>
-    </button>
-  );
-};
-const MobileMenuSidebar = ({
-  isMenuOpen,
-  closeMenu,
-}: MobileMenuSidebarProps) => {
-  return (
-    <div
-      className={`sm:hidden fixed top-0 right-0 h-full w-60 max-w-[80vw] bg-card z-40 transform transition-transform duration-300 ease-in-out ${
-        isMenuOpen ? "translate-x-0" : "translate-x-full"
-      } shadow-2xl border-l border-border`}
-    >
-      <div className="flex flex-col pt-20 space-y-6">
-        <div
-          onClick={closeMenu}
-          className="hover:bg-muted/50 transition-all duration-300 px-6 py-2 cursor-pointer"
-        >
-          <NavLink href="/farms">Explore</NavLink>
-        </div>
-        <div
-          onClick={closeMenu}
-          className="hover:bg-muted/50 transition-all duration-300 px-6 py-2 cursor-pointer"
-        >
-          <NavLink href="/farms">FAQ</NavLink>
-        </div>
-        <div
-          onClick={closeMenu}
-          className="hover:bg-muted/50 transition-all duration-300 px-6 py-2 cursor-pointer"
-        >
-          <NavLink href="/farms">About</NavLink>
-        </div>
-        <div onClick={closeMenu} className="px-6 py-2">
-          <JoinDiscord />
-        </div>
-      </div>
-    </div>
-  );
-};
 const JoinDiscord = () => {
   return (
     <button className=" flex items-center p-1 gap-2 rounded-2xl cursor-pointer transition-colors duration-300 hover:bg-[#39429d]">

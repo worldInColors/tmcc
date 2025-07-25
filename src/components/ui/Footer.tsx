@@ -3,7 +3,7 @@ import React from "react";
 
 function Footer() {
   return (
-    <footer className="bg-card border-t border-border py-8 px-4 z-20 relative">
+    <footer className="bg-card border-t border-border py-8 px-4  relative">
       <div className="max-w-6xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Brand Section */}
