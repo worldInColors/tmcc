@@ -3,7 +3,7 @@ import Link from "next/link";
 
 function Dock() {
   return (
-    <div className="md:hidden dock dock-lg">
+    <div className="md:hidden dock dock-lg bg-card">
       {/* Home */}
       <Link href="/" className="dock-item">
         <svg
