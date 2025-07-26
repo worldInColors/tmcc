@@ -142,9 +142,9 @@ function SearchModal() {
       </div>
 
       {/* Close modal when clicked outside */}
-      <div className="modal-backdrop">
-        <button>close</button>
-      </div>
+      <form method="dialog" className="modal-backdrop">
+        <button className="cursor-default">close</button>
+      </form>
     </dialog>
   );
 }

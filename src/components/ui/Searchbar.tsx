@@ -12,17 +12,22 @@ const SearchBar = () => {
           ) as HTMLDialogElement | null;
           modal?.showModal();
         }}
-        className="
-          group flex items-center gap-2 border border-gray-300 
-          py-2 px-4 rounded-md w-full text-left cursor-pointer
-          transition-all duration-300 ease-out 
-          hover:border-blue-500 hover:shadow-sm
-        "
+        className="group flex items-center gap-3 bg-card/50 hover:bg-card/80 border border-border/40 hover:border-border py-2.5 px-4 rounded-xl w-64 hover:shadow-xl transition-all duration-200"
       >
-        <Search className="text-gray-400 group-hover:text-gray-700 transition duration-300" />
-        <span className="text-gray-400 group-hover:text-gray-700 transition duration-300">
-          Search designs
-        </span>
+        <Search className="w-4 h-4 text-muted-foreground group-hover:text-foreground/80 transition-colors duration-200" />
+        <div className="flex-1 flex items-center justify-between">
+          <span className="text-sm text-muted-foreground group-hover:text-foreground/80 transition-colors duration-200">
+            Search farms...
+          </span>
+          <div className="hidden sm:flex items-center gap-1 text-xs text-muted-foreground/60">
+            <kbd className="px-1.5 py-0.5 text-xs bg-muted/60 border border-border/40 rounded">
+              ⌘
+            </kbd>
+            <kbd className="px-1.5 py-0.5 text-xs bg-muted/60 border border-border/40 rounded">
+              K
+            </kbd>
+          </div>
+        </div>
       </button>
       <SearchModal />
     </>
