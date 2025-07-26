@@ -105,9 +105,11 @@ function SearchModal() {
         <div className=" bg-[#1a1a1a] border-b border-gray-700 pb-4">
           {/* Mobile Header */}
           <div className="md:hidden flex items-center mb-4">
-            <button className="btn btn-ghost btn-sm btn-circle mr-3">
-              <ArrowLeft className="w-5 h-5 text-gray-400" />
-            </button>
+            <form method="dialog">
+              <button className="btn btn-ghost btn-sm btn-circle mr-3">
+                <ArrowLeft className="w-5 h-5 text-gray-400" />
+              </button>
+            </form>
             <div className="flex-1 relative">
               <Search className="absolute left-3 top-1/2 transform z-10 -translate-y-1/2 w-5 h-5 text-gray-300" />
               <input
