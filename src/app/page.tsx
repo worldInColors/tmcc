@@ -6,6 +6,8 @@ import Link from "next/link";
 
 export default function Home() {
   const containerRef = useRef<HTMLDivElement | null>(null);
+  const overlayRef = useRef<HTMLDivElement | null>(null);
+  const contentRef = useRef<HTMLDivElement | null>(null);
   const headingRef = useRef<HTMLHeadingElement | null>(null);
   const paragraphRef = useRef<HTMLParagraphElement | null>(null);
   const buttonRef = useRef<HTMLButtonElement | null>(null);
@@ -26,6 +28,36 @@ export default function Home() {
         duration: 0.5,
         ease: "power2.out",
       }
+    );
+
+    // Overlay fade in
+    tl.fromTo(
+      overlayRef.current,
+      {
+        opacity: 0,
+      },
+      {
+        opacity: 1,
+        duration: 0.3,
+        ease: "power2.out",
+      },
+      "-=0.3"
+    );
+
+    // Content container animation
+    tl.fromTo(
+      contentRef.current,
+      {
+        opacity: 0,
+        y: 30,
+      },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.4,
+        ease: "power2.out",
+      },
+      "+=0.1"
     );
 
     // Heading animation
@@ -148,40 +180,39 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="flex items-center justify-center px-4 py-4">
+    <div
+      ref={containerRef}
+      className="hero min-h-screen"
+      style={{
+        backgroundImage: `url('/Hero.jpg')`,
+      }}
+    >
+      <div ref={overlayRef} className="hero-overlay bg-opacity-60"></div>
       <div
-        ref={containerRef}
-        className="w-full max-w-[1000px] min-h-[600px] gap-2 flex flex-col items-center justify-center bg-cover bg-center text-white rounded-lg"
-        style={{
-          backgroundImage: `
-            linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.5)),
-            url('/Hero.jpg')
-          `,
-        }}
+        ref={contentRef}
+        className="hero-content text-neutral-content text-center"
       >
-        <h1
-          ref={headingRef}
-          className="text-xl sm:text-2xl md:text-3xl lg:text-4xl cursor-pointer text-center px-4 sm:px-0"
-        >
-          Welcome to the Minecraft Farm Archives
-        </h1>
-
-        <p
-          ref={paragraphRef}
-          className="text-sm sm:text-base lg:text-lg font-semibold text-center px-4 sm:px-0"
-        >
-          Discover the history and evolution of Minecraft farms, from simple
-          designs to complex automated systems.
-        </p>
-
-        <Link href="/farms">
-          <button
-            ref={buttonRef}
-            className="bg-card text-secondary-foreground shadow-xs h-10 rounded-md px-6 has-[>svg]:px-4 hover:bg-card/80 transition-colors duration-200 cursor-pointer"
+        <div className="max-w-lg">
+          <h1
+            ref={headingRef}
+            className="mb-5 text-4xl font-bold cursor-pointer"
           >
-            Explore the archive
-          </button>
-        </Link>
+            Welcome to the Minecraft Farm Archives
+          </h1>
+          <p ref={paragraphRef} className="mb-5">
+            Discover the history and evolution of Minecraft farms, from simple
+            designs to complex automated systems.
+          </p>
+          <Link href="/farms">
+            <button
+              ref={buttonRef}
+              className="bg-card text-secondary-foreground shadow-xs h-10 rounded-md px-6 has-[>svg]:px-4 hover:bg-card/80 transition-colors duration-200 cursor-pointer"
+            >
+              {" "}
+              Explore the archive{" "}
+            </button>
+          </Link>
+        </div>
       </div>
     </div>
   );
