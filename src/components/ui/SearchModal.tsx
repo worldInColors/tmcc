@@ -1,18 +1,20 @@
 "use client";
 import React, { useState } from "react";
 import { Search, ArrowLeft, Grid } from "lucide-react";
-
-// Simple horizontal farm item component
-function FarmItem({
-  farm,
-}: {
-  farm: {
-    farmName: string;
-    rates: string;
-    credits: string;
-    version: string;
-  };
-}) {
+type Farm = {
+  farmName: string;
+  rates: string;
+  credits: string;
+  version: string;
+};
+type FarmItemProps = {
+  farm: Farm;
+};
+type HeadersProps = {
+  searchQuery: string;
+  setSearchQuery: React.Dispatch<React.SetStateAction<string>>;
+};
+function FarmItem({ farm }: FarmItemProps) {
   const { farmName, rates, credits, version } = farm;
 
   return (
@@ -103,60 +105,15 @@ function SearchModal() {
       <div className="modal-box min-w-full min-h-full md:min-w-0 md:min-h-0 md:max-w-4xl bg-[#1a1a1a]">
         {/* Header */}
         <div className=" bg-[#1a1a1a] border-b border-gray-700 pb-4">
-          {/* Mobile Header */}
-          <div className="md:hidden flex items-center mb-4">
-            <form method="dialog">
-              <button className="btn btn-ghost btn-sm btn-circle mr-3">
-                <ArrowLeft className="w-5 h-5 text-gray-400" />
-              </button>
-            </form>
-            <div className="flex-1 relative">
-              <Search className="absolute left-3 top-1/2 transform z-10 -translate-y-1/2 w-5 h-5 text-gray-300" />
-              <input
-                type="text"
-                placeholder="Search"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="input input-bordered w-full pl-10 bg-[#2a2a2a] border-gray-600 text-white placeholder-gray-400"
-                autoFocus
-              />
-            </div>
-            <button className="btn btn-ghost btn-sm btn-circle ml-2">
-              <Grid className="w-5 h-5" />
-            </button>
-          </div>
-
-          {/* Desktop Header */}
-          <div className="hidden md:flex items-center justify-between">
-            <div className="flex-1  relative">
-              <Search className="absolute left-3 top-1/2 transform z-10 -translate-y-1/2 w-5 h-5 text-gray-300" />
-              <input
-                type="text"
-                placeholder="Search"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="input input-bordered w-full pl-12 pr-4 py-3 text-lg bg-[#2a2a2a] border-gray-600 text-white placeholder-gray-400"
-                autoFocus
-              />
-            </div>
-          </div>
-
-          {/* Navigation hints (desktop only) */}
-          <div className="hidden md:flex items-center gap-6 mt-3 text-sm text-gray-500">
-            <span className="flex items-center gap-2">
-              <kbd className="kbd kbd-xs">↑</kbd>
-              <kbd className="kbd kbd-xs">↓</kbd>
-              <span>to navigate</span>
-            </span>
-            <span className="flex items-center gap-2">
-              <kbd className="kbd kbd-xs">↵</kbd>
-              <span>to select</span>
-            </span>
-            <span className="flex items-center gap-2">
-              <kbd className="kbd kbd-xs">esc</kbd>
-              <span>to close</span>
-            </span>
-          </div>
+          <MobileHeader
+            searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery}
+          />
+          <DesktopHeader
+            searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery}
+          />
+          <NavigationHints />
         </div>
 
         {/* Content */}
@@ -180,18 +137,8 @@ function SearchModal() {
           )}
 
           {/* No Results */}
-          {searchQuery && filteredFarms.length === 0 && (
-            <div className="text-center py-12">
-              <div className="text-6xl mb-4">🔍</div>
-              <h3 className="text-xl font-semibold text-white mb-2">
-                No farms found
-              </h3>
-              <p className="text-gray-400">Try searching for something else</p>
-            </div>
-          )}
+          {searchQuery && filteredFarms.length === 0 && <NoResults />}
         </div>
-
-        <div className="modal-action"></div>
       </div>
 
       {/* Close modal when clicked outside */}
@@ -201,5 +148,74 @@ function SearchModal() {
     </dialog>
   );
 }
-
+function MobileHeader({ searchQuery, setSearchQuery }: HeadersProps) {
+  return (
+    <div className="md:hidden flex items-center mb-4">
+      <form method="dialog">
+        <button className="btn btn-ghost btn-sm btn-circle mr-3">
+          <ArrowLeft className="w-5 h-5 text-gray-400" />
+        </button>
+      </form>
+      <div className="flex-1 relative">
+        <Search className="absolute left-3 top-1/2 transform z-10 -translate-y-1/2 w-5 h-5 text-gray-300" />
+        <input
+          type="text"
+          placeholder="Search"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          className="input input-bordered w-full pl-10 bg-[#2a2a2a] border-gray-600 text-white placeholder-gray-400"
+          autoFocus
+        />
+      </div>
+      <button className="btn btn-ghost btn-sm btn-circle ml-2">
+        <Grid className="w-5 h-5" />
+      </button>
+    </div>
+  );
+}
+function DesktopHeader({ searchQuery, setSearchQuery }: HeadersProps) {
+  return (
+    <div className="hidden md:flex items-center justify-between">
+      <div className="flex-1  relative">
+        <Search className="absolute left-3 top-1/2 transform z-10 -translate-y-1/2 w-5 h-5 text-gray-300" />
+        <input
+          type="text"
+          placeholder="Search"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          className="input input-bordered w-full pl-12 pr-4 py-3 text-lg bg-[#2a2a2a] border-gray-600 text-white placeholder-gray-400"
+          autoFocus
+        />
+      </div>
+    </div>
+  );
+}
+const NavigationHints = () => {
+  return (
+    <div className="hidden md:flex items-center gap-6 mt-3 text-sm text-gray-500">
+      <span className="flex items-center gap-2">
+        <kbd className="kbd kbd-xs">↑</kbd>
+        <kbd className="kbd kbd-xs">↓</kbd>
+        <span>to navigate</span>
+      </span>
+      <span className="flex items-center gap-2">
+        <kbd className="kbd kbd-xs">↵</kbd>
+        <span>to select</span>
+      </span>
+      <span className="flex items-center gap-2">
+        <kbd className="kbd kbd-xs">esc</kbd>
+        <span>to close</span>
+      </span>
+    </div>
+  );
+};
+const NoResults = () => {
+  return (
+    <div className="text-center py-12">
+      <div className="text-6xl mb-4">🔍</div>
+      <h3 className="text-xl font-semibold text-white mb-2">No farms found</h3>
+      <p className="text-gray-400">Try searching for something else</p>
+    </div>
+  );
+};
 export default SearchModal;
