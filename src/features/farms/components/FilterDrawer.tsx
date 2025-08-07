@@ -155,4 +155,4 @@ function DifficultyFilter({ value, onChange }: FilterProps) {
   );
 }
 
-export default FilterDrawer;
+export { FilterDrawer };

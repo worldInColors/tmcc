@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import { Space_Grotesk } from "next/font/google";
 import "./globals.css";
-import Header from "@/components/ui/Header";
-import Footer from "@/components/ui/Footer";
-import SearchModal from "@/components/ui/SearchModal";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import SearchModal from "@/components/SearchModal";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/next";
 const spaceGrotesk = Space_Grotesk({

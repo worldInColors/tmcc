@@ -27,7 +27,8 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "src/app/farms/app-sidebar-multiple.jsx"
+    "src/features/farms/components/sidebar/SideBar.jsx",
+    "src/features/farms/components/AnimatedCollapisableMenuItem.jsx"
   ],
   "exclude": ["node_modules"]
 }
