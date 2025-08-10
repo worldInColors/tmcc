@@ -15,10 +15,8 @@ import {
   Users,
   Award,
   Video,
-  Eye,
   Gauge,
   Cpu,
-  Timer,
   CheckCircle,
   XCircle,
   AlertTriangle,
@@ -190,11 +188,11 @@ const MapArtCleanerPage = () => {
                 <div className="bg-card rounded-lg border border-border p-6">
                   <h2 className="text-2xl font-semibold mb-4 flex items-center gap-2">
                     <Activity className="w-6 h-6 text-primary" />
-                    Performance Rates
+                    Rates
                   </h2>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="flex items-center gap-3 p-4 bg-muted rounded-lg">
-                      <Timer className="w-8 h-8 text-blue-500" />
+                      <Clock className="w-8 h-8 text-blue-500" />
                       <div>
                         <div className="font-semibold">Snow Fill Mode</div>
                         <div className="font-mono text-sm text-muted-foreground">
@@ -405,7 +403,7 @@ const MapArtCleanerPage = () => {
                       </div>
                     </div>
                     <div className="flex items-center gap-3 p-4 bg-muted rounded-lg">
-                      <Timer className="w-8 h-8 text-blue-500" />
+                      <Clock className="w-8 h-8 text-blue-500" />
                       <div>
                         <div className="font-semibold">Snow Fill</div>
                         <div className="font-mono text-sm text-muted-foreground">
