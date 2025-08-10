@@ -2,8 +2,9 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import SearchBar from "./ui/Searchbar";
+import SearchBar from "./Searchbar";
 import Dock from "./ui/Dock";
+import { Compass } from "lucide-react";
 
 function Header() {
   return (
@@ -24,9 +25,9 @@ function Header() {
         </div>
         <div className="hidden md:flex items-center gap-4">
           <SearchBar />
-          <NavLink href="/farms">Explore</NavLink>
-          <NavLink href="/farms">FAQ</NavLink>
-          <NavLink href="/farms">About</NavLink>
+          <NavLink href="/farms">
+            <Compass />
+          </NavLink>
           <JoinDiscord />
         </div>
       </nav>
