@@ -219,7 +219,7 @@ const MapArtCleanerPage = () => {
                   <div className="bg-card rounded-lg border border-border p-6">
                     <h3 className="font-semibold text-lg mb-4 flex items-center gap-2 text-green-600 dark:text-green-400">
                       <CheckCircle className="w-5 h-5" />
-                      Pros
+                      Positives
                     </h3>
                     <ul className="space-y-3">
                       {data.positives.map((positive, index) => (
@@ -233,7 +233,7 @@ const MapArtCleanerPage = () => {
                   <div className="bg-card rounded-lg border border-border p-6">
                     <h3 className="font-semibold text-lg mb-4 flex items-center gap-2 text-red-600 dark:text-red-400">
                       <XCircle className="w-5 h-5" />
-                      Cons
+                      Negatives
                     </h3>
                     <ul className="space-y-3">
                       {data.negatives.map((negative, index) => (

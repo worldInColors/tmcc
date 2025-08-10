@@ -12,172 +12,179 @@ export const useHeroGSAP = () => {
   const paragraphRef = useRef<HTMLParagraphElement | null>(null);
   const buttonRef = useRef<HTMLButtonElement | null>(null);
 
-  useGSAP(() => {
-    const tl = gsap.timeline();
+  useGSAP(
+    () => {
+      if (!containerRef.current) return;
 
-    // Container animation
-    tl.fromTo(
-      containerRef.current,
-      {
-        opacity: 0,
-        scale: 0.95,
-      },
-      {
-        opacity: 1,
-        scale: 1,
-        duration: 0.5,
-        ease: "power2.out",
-      }
-    );
+      const tl = gsap.timeline();
 
-    // Overlay fade in
-    tl.fromTo(
-      overlayRef.current,
-      {
-        opacity: 0,
-      },
-      {
-        opacity: 1,
-        duration: 0.3,
-        ease: "power2.out",
-      },
-      "-=0.3"
-    );
+      // Container animation
+      tl.fromTo(
+        containerRef.current,
+        {
+          opacity: 0,
+          scale: 0.95,
+        },
+        {
+          opacity: 1,
+          scale: 1,
+          duration: 0.5,
+          ease: "power2.out",
+        }
+      );
 
-    // Content container animation
-    tl.fromTo(
-      contentRef.current,
-      {
-        opacity: 0,
-        y: 30,
-      },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 0.4,
-        ease: "power2.out",
-      },
-      "+=0.1"
-    );
-
-    // Heading animation
-    tl.fromTo(
-      headingRef.current,
-      {
-        opacity: 0,
-        y: -20,
-      },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 0.5,
-        ease: "power2.out",
-      },
-      "+=0.1"
-    );
-
-    // Paragraph animation
-    tl.fromTo(
-      paragraphRef.current,
-      {
-        opacity: 0,
-        y: 20,
-      },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 0.5,
-        ease: "power2.out",
-      },
-      "+=0.05"
-    );
-
-    // Button animation
-    tl.fromTo(
-      buttonRef.current,
-      {
-        opacity: 0,
-        scale: 0.9,
-      },
-      {
-        opacity: 1,
-        scale: 1,
-        duration: 0.2,
-        ease: "power2.out",
-      },
-      "+=0.05"
-    );
-
-    // Hover animations
-    const setupHover = (
-      element: HTMLElement | null,
-      hoverScale = 1.05,
-      normalScale = 1
-    ) => {
-      if (!element) return () => {};
-
-      const handleMouseEnter = () => {
-        gsap.to(element, {
-          scale: hoverScale,
+      // Overlay fade in
+      tl.fromTo(
+        overlayRef.current,
+        {
+          opacity: 0,
+        },
+        {
+          opacity: 1,
           duration: 0.3,
           ease: "power2.out",
-        });
-      };
+        },
+        "-=0.3"
+      );
 
-      const handleMouseLeave = () => {
-        gsap.to(element, {
-          scale: normalScale,
-          duration: 0.3,
+      // Content container animation
+      tl.fromTo(
+        contentRef.current,
+        {
+          opacity: 0,
+          y: 30,
+        },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.4,
           ease: "power2.out",
-        });
-      };
+        },
+        "+=0.1"
+      );
 
-      element.addEventListener("mouseenter", handleMouseEnter);
-      element.addEventListener("mouseleave", handleMouseLeave);
+      // Button animation - appears first
+      tl.fromTo(
+        buttonRef.current,
+        {
+          opacity: 0,
+          scale: 0.9,
+        },
+        {
+          opacity: 1,
+          scale: 1,
+          duration: 0.2,
+          ease: "power2.out",
+        },
+        "+=0.1"
+      );
 
-      return () => {
-        element.removeEventListener("mouseenter", handleMouseEnter);
-        element.removeEventListener("mouseleave", handleMouseLeave);
-      };
-    };
+      // Heading animation - comes after button
+      tl.fromTo(
+        headingRef.current,
+        {
+          opacity: 0,
+          y: -20,
+        },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.5,
+          ease: "power2.out",
+        },
+        "+=0.05"
+      );
 
-    // Button tap animation
-    const handleMouseDown = () => {
-      gsap.to(buttonRef.current, {
-        scale: 0.98,
-        duration: 0.1,
-        ease: "power2.out",
+      // Paragraph animation - comes last
+      tl.fromTo(
+        paragraphRef.current,
+        {
+          opacity: 0,
+          y: 20,
+        },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.5,
+          ease: "power2.out",
+        },
+        "+=0.05"
+      );
+
+      // Wait for initial animations to complete before setting up hover effects
+      tl.call(() => {
+        // Heading hover effect using GSAP's built-in hover handling
+        if (headingRef.current) {
+          const headingHoverTl = gsap
+            .timeline({ paused: true })
+            .to(headingRef.current, {
+              scale: 1.02,
+              duration: 0.3,
+              ease: "power2.out",
+            });
+
+          headingRef.current.addEventListener("mouseenter", () =>
+            headingHoverTl.play()
+          );
+          headingRef.current.addEventListener("mouseleave", () =>
+            headingHoverTl.reverse()
+          );
+        }
+
+        // Button hover and tap effects
+        if (buttonRef.current) {
+          // Hover timeline
+          const buttonHoverTl = gsap
+            .timeline({ paused: true })
+            .to(buttonRef.current, {
+              scale: 1.05,
+              duration: 0.3,
+              ease: "power2.out",
+            });
+
+          // Tap timeline
+          const buttonTapTl = gsap
+            .timeline({ paused: true })
+            .to(buttonRef.current, {
+              scale: 0.98,
+              duration: 0.1,
+              ease: "power2.out",
+            })
+            .to(buttonRef.current, {
+              scale: 1.05,
+              duration: 0.1,
+              ease: "power2.out",
+            });
+
+          // Event listeners
+          buttonRef.current.addEventListener("mouseenter", () => {
+            if (!buttonTapTl.isActive()) {
+              buttonHoverTl.play();
+            }
+          });
+
+          buttonRef.current.addEventListener("mouseleave", () => {
+            if (!buttonTapTl.isActive()) {
+              buttonHoverTl.reverse();
+            }
+          });
+
+          buttonRef.current.addEventListener("mousedown", () => {
+            buttonHoverTl.pause();
+            buttonTapTl.restart();
+          });
+
+          buttonRef.current.addEventListener("mouseup", () => {
+            buttonTapTl.progress(1);
+            if (buttonRef.current?.matches(":hover")) {
+              buttonHoverTl.play();
+            }
+          });
+        }
       });
-    };
-
-    const handleMouseUp = () => {
-      gsap.to(buttonRef.current, {
-        scale: 1.05,
-        duration: 0.1,
-        ease: "power2.out",
-      });
-    };
-
-    // Setup hover effects
-    const cleanupHeading = setupHover(headingRef.current, 1.02, 1);
-    const cleanupButton = setupHover(buttonRef.current, 1.05, 1);
-
-    // Setup button tap
-    if (buttonRef.current) {
-      buttonRef.current.addEventListener("mousedown", handleMouseDown);
-      buttonRef.current.addEventListener("mouseup", handleMouseUp);
-    }
-
-    // Cleanup function
-    return () => {
-      cleanupHeading();
-      cleanupButton();
-      if (buttonRef.current) {
-        buttonRef.current.removeEventListener("mousedown", handleMouseDown);
-        buttonRef.current.removeEventListener("mouseup", handleMouseUp);
-      }
-    };
-  }, []);
+    },
+    { scope: containerRef }
+  ); // Scope animations to the container
 
   // Return all refs for the component to use
   return {

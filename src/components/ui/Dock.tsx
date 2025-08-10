@@ -1,4 +1,5 @@
 "use client";
+import { designsPath } from "@/paths";
 import { Factory, Search } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -50,11 +51,13 @@ function Dock() {
 
       {/* Farms */}
       <Link
-        href="/farms"
-        className={`dock-item ${pathname === "/farms" ? "dock-active" : ""}`}
+        href={designsPath()}
+        className={`dock-item ${
+          pathname === designsPath() ? "dock-active" : ""
+        }`}
       >
         <Factory className="w-5 h-5" />
-        <span className="dock-label">Farms</span>
+        <span className="dock-label">Designs</span>
       </Link>
 
       {/* Settings */}

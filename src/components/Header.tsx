@@ -5,6 +5,7 @@ import Link from "next/link";
 import Dock from "./ui/Dock";
 import SearchBar from "./Searchbar";
 import { Compass } from "lucide-react";
+import { designsPath } from "@/paths";
 
 function Header() {
   return (
@@ -25,7 +26,7 @@ function Header() {
         </div>
         <div className="hidden md:flex items-center gap-4">
           <SearchBar />
-          <NavLink href="/farms">
+          <NavLink href={designsPath()}>
             <Compass />
           </NavLink>
           <JoinDiscord />

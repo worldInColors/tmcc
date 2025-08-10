@@ -19,10 +19,10 @@ function FarmsPage() {
           </p>
           <div className="flex items-end gap-2">
             <SearchBar />
+            <FilterDrawer />
           </div>
           <FarmsList />
         </div>
-        <FilterDrawer />
       </main>
     </SidebarProvider>
   );

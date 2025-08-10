@@ -31,7 +31,7 @@ export default function Home() {
             ref={headingRef}
             className="mb-5 text-4xl font-bold cursor-pointer"
           >
-            Welcome to the Minecraft Farm Archives
+            Welcome to the Mineycraft Farm Archives
           </h1>
           <p ref={paragraphRef} className="mb-5">
             Discover the history and evolution of Minecraft farms, from simple
