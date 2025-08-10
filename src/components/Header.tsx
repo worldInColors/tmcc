@@ -2,8 +2,8 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import SearchBar from "./Searchbar";
 import Dock from "./ui/Dock";
+import SearchBar from "./Searchbar";
 import { Compass } from "lucide-react";
 
 function Header() {
