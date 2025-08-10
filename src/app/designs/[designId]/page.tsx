@@ -152,26 +152,6 @@ const MapArtCleanerPage = () => {
                   </div>
                 </div>
               </div>
-
-              {/* Downloads */}
-              <div className="flex gap-3">
-                {data.downloads.map((download, index) => {
-                  const IconComponent = download.icon;
-                  return (
-                    <button
-                      key={index}
-                      className="flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:opacity-90 transition-opacity"
-                    >
-                      <IconComponent className="w-4 h-4" />
-                      {download.name}
-                    </button>
-                  );
-                })}
-                <button className="flex items-center gap-2 px-4 py-2 border border-border rounded-lg hover:bg-accent transition-colors">
-                  <Play className="w-4 h-4" />
-                  Watch Video
-                </button>
-              </div>
             </div>
           </div>
         </div>
