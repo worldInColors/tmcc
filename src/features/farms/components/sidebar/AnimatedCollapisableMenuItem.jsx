@@ -152,7 +152,7 @@ const AnimatedCollapsibleMenuItem = ({
           {category.subCategories.map((subCategory, index) => (
             <a
               key={subCategory}
-              href={`/farms/${subCategory}`}
+              href={`/designs/${subCategory}`}
               ref={(el) => setSubItemRef(el, index)}
               className={`block rounded-md px-3 py-2 text-sm transition-colors duration-200 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground ${
                 activeSubCategory === subCategory
