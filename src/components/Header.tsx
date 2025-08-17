@@ -5,7 +5,7 @@ import Link from "next/link";
 import Dock from "./ui/Dock";
 import SearchBar from "./Searchbar";
 import { Compass } from "lucide-react";
-import { designsPath } from "@/paths";
+import { designsPath, discordInvitePath } from "@/paths";
 
 function Header() {
   return (
@@ -57,9 +57,14 @@ const NavLink = ({
 
 const JoinDiscord = () => {
   return (
-    <button className="flex items-center p-1 gap-2 rounded-2xl cursor-pointer transition-colors duration-300 group">
+    <a
+      href={discordInvitePath()}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="flex items-center p-1 gap-2 rounded-2xl cursor-pointer transition-colors duration-300 group"
+    >
       <DiscordIcon />
-    </button>
+    </a>
   );
 };
 

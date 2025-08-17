@@ -1,17 +1,15 @@
 "use client";
-
-import { useState, useRef } from "react";
+import { useRef } from "react";
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
 
 export const useFarmCardGsap = (index: number) => {
-  const [showRipple, setShowRipple] = useState(false);
-  const [isHovered, setIsHovered] = useState(false);
-
   const cardRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const rippleRef = useRef<HTMLDivElement>(null);
+
+  const { contextSafe } = useGSAP({ scope: cardRef });
 
   // Initial entrance animation
   useGSAP(() => {
@@ -35,100 +33,104 @@ export const useFarmCardGsap = (index: number) => {
     );
   }, []);
 
-  // Hover animations
-  useGSAP(() => {
-    if (!cardRef.current || !imageRef.current || !contentRef.current) return;
+  const handleClick = contextSafe(() => {
+    if (!cardRef.current || !rippleRef.current) return;
 
-    if (isHovered) {
-      // Card hover animation
-      gsap.to(cardRef.current, {
-        scale: 1.02,
-        y: -8,
-        boxShadow:
-          "0 20px 40px rgba(0,0,0,0.3), 0 0 30px rgba(20, 71, 153, 0.2)",
-        duration: 0.2,
-        ease: "power2.out",
-      });
-
-      // Image zoom
-      gsap.to(imageRef.current, {
-        scale: 1.04,
-        duration: 0.3,
-        ease: "power2.out",
-      });
-
-      // Content slide up
-      gsap.to(contentRef.current, {
-        y: -3,
-        duration: 0.2,
-        ease: "power2.out",
-      });
-    } else {
-      // Reset animations
-      gsap.to(cardRef.current, {
-        scale: 1,
-        y: 0,
-        boxShadow: "0 0 0 0 rgba(0,0,0,0)",
-        duration: 0.2,
-        ease: "power2.out",
-      });
-
-      gsap.to(imageRef.current, {
-        scale: 1,
-        duration: 0.3,
-        ease: "power2.out",
-      });
-
-      gsap.to(contentRef.current, {
-        y: 0,
-        duration: 0.2,
-        ease: "power2.out",
-      });
-    }
-  }, [isHovered]);
-
-  // Ripple animation
-  useGSAP(() => {
-    if (!rippleRef.current || !showRipple) return;
+    // Click animation
+    gsap.to(cardRef.current, {
+      scale: 0.98,
+      duration: 0.1,
+      ease: "power2.out",
+      yoyo: true,
+      repeat: 1,
+    });
 
     gsap.fromTo(
       rippleRef.current,
       {
         scale: 0,
-        opacity: 0.3,
+        opacity: 0.5,
+        transformOrigin: "center center",
+        visibility: "visible",
       },
       {
-        scale: 1.5,
+        scale: 1.8,
         opacity: 0,
-        duration: 0.6,
+        duration: 0.5,
         ease: "power2.out",
-        onComplete: () => setShowRipple(false),
+        onComplete: () => {
+          // Hide the ripple after animation completes
+          gsap.set(rippleRef.current, { visibility: "hidden" });
+        },
       }
     );
-  }, [showRipple]);
+  });
 
-  const handleClick = () => {
-    setShowRipple(true);
+  const handleMouseEnter = contextSafe(() => {
+    if (!cardRef.current || !imageRef.current || !contentRef.current) return;
 
-    // Click animation
-    if (cardRef.current) {
-      gsap.to(cardRef.current, {
-        scale: 0.98,
-        duration: 0.1,
-        ease: "power2.out",
-        yoyo: true,
-        repeat: 1,
-      });
-    }
-  };
+    const tl = gsap.timeline();
 
-  const handleMouseEnter = () => {
-    setIsHovered(true);
-  };
+    tl.to(cardRef.current, {
+      scale: 1.02,
+      y: -8,
+      duration: 0.2,
+      ease: "power2.out",
+      filter: "drop-shadow(0 20px 40px rgba(56, 56, 83, 0.3))",
+    })
+      // Image zoom
+      .to(
+        imageRef.current,
+        {
+          scale: 1.04,
+          duration: 0.3,
+          ease: "power2.out",
+        },
+        "<"
+      )
+      // Content slide up
+      .to(
+        contentRef.current,
+        {
+          y: -3,
+          duration: 0.2,
+          ease: "power2.out",
+        },
+        "<"
+      );
+  });
 
-  const handleMouseLeave = () => {
-    setIsHovered(false);
-  };
+  const handleMouseLeave = contextSafe(() => {
+    if (!cardRef.current || !imageRef.current || !contentRef.current) return;
+
+    const tl = gsap.timeline();
+
+    tl.to(cardRef.current, {
+      scale: 1,
+      y: 0,
+      duration: 0.2,
+      filter: "",
+      ease: "power2.out",
+    })
+      .to(
+        imageRef.current,
+        {
+          scale: 1,
+          duration: 0.3,
+          ease: "power2.out",
+        },
+        "<"
+      )
+      .to(
+        contentRef.current,
+        {
+          y: 0,
+          duration: 0.2,
+          ease: "power2.out",
+        },
+        "<"
+      );
+  });
 
   return {
     cardRef,
@@ -137,7 +139,6 @@ export const useFarmCardGsap = (index: number) => {
     handleMouseLeave,
     imageRef,
     contentRef,
-    showRipple,
     rippleRef,
   };
 };

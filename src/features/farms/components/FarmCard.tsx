@@ -24,7 +24,6 @@ function FarmCard({ farm, index = 0 }: FarmCardProps) {
     handleMouseLeave,
     imageRef,
     contentRef,
-    showRipple,
     rippleRef,
   } = useFarmCardGsap(index);
 
@@ -62,12 +61,10 @@ function FarmCard({ farm, index = 0 }: FarmCardProps) {
       </div>
 
       {/* Ripple effect on click */}
-      {showRipple && (
-        <div
-          ref={rippleRef}
-          className="absolute inset-0 bg-white rounded-2xl pointer-events-none"
-        />
-      )}
+      <div
+        ref={rippleRef}
+        className="absolute inset-0 bg-white/20 rounded-2xl pointer-events-none scale-0 invisible z-1"
+      />
     </div>
   );
 }

@@ -5,6 +5,7 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { SidebarMenuItem, SidebarMenuButton } from "@/components/ui/sidebar";
 import { ChevronDown } from "lucide-react";
+import Link from "next/link";
 // Custom animated collapsible menu item
 const AnimatedCollapsibleMenuItem = ({
   category,
@@ -30,12 +31,6 @@ const AnimatedCollapsibleMenuItem = ({
     const subItems = subItemsRef.current.filter(Boolean);
 
     if (!submenu || !chevron) return;
-
-    // Kill any existing animations
-    if (timelineRef.current) {
-      timelineRef.current.kill();
-    }
-    gsap.killTweensOf(chevron);
 
     // Create new timeline
     timelineRef.current = gsap.timeline();
@@ -112,15 +107,6 @@ const AnimatedCollapsibleMenuItem = ({
           "-=0.06"
         );
     }
-
-    return () => {
-      if (timelineRef.current) {
-        timelineRef.current.kill();
-      }
-      if (chevron) {
-        gsap.killTweensOf(chevron);
-      }
-    };
   }, [isOpen]);
 
   const toggleOpen = useCallback(() => {
@@ -137,7 +123,7 @@ const AnimatedCollapsibleMenuItem = ({
     <SidebarMenuItem>
       <SidebarMenuButton
         onClick={toggleOpen}
-        className="w-full justify-between"
+        className="w-full  justify-between"
       >
         <span>{category.name}</span>
         <ChevronDown ref={chevronRef} className="h-4 w-4 shrink-0" />
@@ -150,7 +136,7 @@ const AnimatedCollapsibleMenuItem = ({
       >
         <div className="space-y-1 py-2">
           {category.subCategories.map((subCategory, index) => (
-            <a
+            <Link
               key={subCategory}
               href={`/designs/${subCategory}`}
               ref={(el) => setSubItemRef(el, index)}
@@ -161,7 +147,7 @@ const AnimatedCollapsibleMenuItem = ({
               }`}
             >
               {formatName(subCategory)}
-            </a>
+            </Link>
           ))}
         </div>
       </div>
