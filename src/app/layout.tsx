@@ -29,6 +29,7 @@ export const metadata: Metadata = {
     {
       rel: "icon",
       type: "image/png",
+
       sizes: "16x16",
       url: "/favicon_io/favicon-16x16.png",
     },
@@ -47,7 +48,7 @@ export const metadata: Metadata = {
     siteName: "TMC Catalogue",
     images: [
       {
-        url: "/logo.png", // Just your logo
+        url: "/logo.png",
         width: 800,
         height: 800,
         alt: "TMC Logo",
@@ -59,11 +60,11 @@ export const metadata: Metadata = {
 
   // Twitter Card metadata
   twitter: {
-    card: "summary", // Use "summary" for square logo images
+    card: "summary",
     title: "TMC Catalogue",
     description: "Browse our comprehensive catalogue of products and services",
-    images: ["/logo.png"], // Just your logo
-    creator: "@your_twitter_handle", // Optional: replace with your Twitter handle
+    images: ["/logo.png"],
+    creator: "@your_twitter_handle",
   },
 
   // Additional metadata
