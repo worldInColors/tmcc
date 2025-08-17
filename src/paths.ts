@@ -1,3 +1,4 @@
+export const domain = () => "https://tmcc.dev";
 export const homePath = () => "/";
 export const designsPath = () => "/designs/all";
 export const designPath = (designId: string) => `/designs/${designId}`;
