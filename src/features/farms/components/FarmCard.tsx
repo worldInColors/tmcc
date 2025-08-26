@@ -1,6 +1,7 @@
 "use client";
-import { useFarmCardGsap } from "@/hooks/animations/useFarmCardGsap";
 import Image from "next/image";
+import { motion } from "motion/react";
+import { useState } from "react";
 
 interface Farm {
   farmName: string;
@@ -16,27 +17,31 @@ interface FarmCardProps {
 
 function FarmCard({ farm, index = 0 }: FarmCardProps) {
   const { farmName, rates, credits, version } = farm;
-
-  const {
-    cardRef,
-    handleClick,
-    handleMouseEnter,
-    handleMouseLeave,
-    imageRef,
-    contentRef,
-    rippleRef,
-  } = useFarmCardGsap(index);
+  const [entranceDelay, setEntranceDelay] = useState(index * 0.1);
 
   return (
-    <div
-      ref={cardRef}
+    <motion.div
+      initial={{ y: 50, opacity: 0, scale: 0.9 }}
+      animate={{
+        y: 0,
+        opacity: 1,
+        scale: 1,
+        transition: { duration: 0.6, delay: entranceDelay, ease: "backOut" },
+      }}
+      onAnimationComplete={() => setEntranceDelay(0)}
+      whileHover={{
+        scale: 1.02,
+        y: -8,
+        filter: "drop-shadow(0 20px 40px rgba(56, 56, 83, 0.3))",
+        transition: { duration: 0.2, ease: "easeOut" },
+      }}
       className="bg-[#313131] overflow-hidden rounded-2xl flex flex-col cursor-pointer relative"
-      onClick={handleClick}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
     >
       <div className="w-full overflow-hidden">
-        <div ref={imageRef}>
+        <motion.div
+          whileHover={{ scale: 1.04 }}
+          transition={{ duration: 0.3, ease: "easeOut", delay: 0 }}
+        >
           <Image
             src="https://lh3.googleusercontent.com/aida-public/AB6AXuCZBB0G93NEBoO7C_aIdsiD_BmsL7tVvCSXOFfmi_jO9c0HeTBkzvYVchwvZUKUF6t52veEbPhdJyMIMOhoXRScV_VIyT97ewv2sy387hGDJQJ1-Fv9rlMmnhB3hJDmYvzco6HfgolfS_XV8uZpWcQ1fut8NPFVp_kVUJRZ2QLiHDCd28xdKyWlERJxDd3us9yLgzTcrsCqw3fa-RFX93wORasovWB8C58JkyV_WK5FhlC9pUez2-yxNalXHfBztBPkpXRdidIYBx8l"
             alt={`${farmName} farm image`}
@@ -44,10 +49,14 @@ function FarmCard({ farm, index = 0 }: FarmCardProps) {
             height={200}
             className="w-full h-full object-cover"
           />
-        </div>
+        </motion.div>
       </div>
 
-      <div ref={contentRef} className="py-3 px-4">
+      <motion.div
+        whileHover={{ y: -3 }}
+        transition={{ duration: 0.2, ease: "easeOut", delay: 0 }}
+        className="py-3 px-4"
+      >
         <div className="flex justify-between items-start mb-1">
           <h2 className="text-xl font-semibold text-white">{farmName}</h2>
           <span className="text-green-400 text-sm bg-green-400/10 px-2 py-1 rounded-full">
@@ -58,14 +67,11 @@ function FarmCard({ farm, index = 0 }: FarmCardProps) {
         <div className="flex justify-between items-center">
           <span className="text-xs text-gray-500">by {credits}</span>
         </div>
-      </div>
+      </motion.div>
 
       {/* Ripple effect on click */}
-      <div
-        ref={rippleRef}
-        className="absolute inset-0 bg-white/20 rounded-2xl pointer-events-none scale-0 invisible z-1"
-      />
-    </div>
+      <div className="absolute inset-0 bg-white/20 rounded-2xl pointer-events-none scale-0 invisible z-1" />
+    </motion.div>
   );
 }
 
