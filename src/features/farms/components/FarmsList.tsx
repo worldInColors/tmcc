@@ -132,7 +132,11 @@ const FarmsList = () => {
   return (
     <ul className="grid lg:grid-cols-4 gap-4 mt-4 md:grid-cols-3 sm:grid-cols-2">
       {farms.map((farm: Farm, index: number) => (
-        <FarmCard farm={farm} key={farm.farmName} index={index} />
+        <FarmCard
+          farm={farm}
+          key={farm.farmName + Math.random()}
+          index={index}
+        />
       ))}
     </ul>
   );
