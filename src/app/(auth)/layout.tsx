@@ -1,9 +1,6 @@
 import type { Metadata } from "next";
 import { Space_Grotesk } from "next/font/google";
-import "./globals.css";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
-import SearchModal from "@/components/SearchModal";
+import "../globals.css";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/next";
 import { domain } from "@/paths";
@@ -16,7 +13,6 @@ const spaceGrotesk = Space_Grotesk({
 export const metadata: Metadata = {
   title: "TMC Catalogue",
   description: "Browse our comprehensive catalogue",
-
   // Basic favicon setup
   icons: [
     { rel: "icon", url: "/favicon.ico" },
@@ -29,7 +25,6 @@ export const metadata: Metadata = {
     {
       rel: "icon",
       type: "image/png",
-
       sizes: "16x16",
       url: "/favicon_io/favicon-16x16.png",
     },
@@ -39,7 +34,6 @@ export const metadata: Metadata = {
       url: "/favicon_io/apple-touch-icon.png",
     },
   ],
-
   // Open Graph metadata for social media embeds
   openGraph: {
     title: "TMC Catalogue",
@@ -57,7 +51,6 @@ export const metadata: Metadata = {
     locale: "en_US",
     type: "website",
   },
-
   // Twitter Card metadata
   twitter: {
     card: "summary",
@@ -66,7 +59,6 @@ export const metadata: Metadata = {
     images: ["/logo.png"],
     creator: "@your_twitter_handle",
   },
-
   // Additional metadata
   metadataBase: new URL(domain()),
   alternates: {
@@ -74,18 +66,15 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default function AuthLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
     <html lang="en" className={`${spaceGrotesk.variable} dark`}>
-      <body className="font-space-grotesk antialiased bg-background pb-[71px] md:pb-0">
-        <SearchModal />
-        <Header />
+      <body className="font-space-grotesk antialiased bg-background">
         <main className="min-h-screen">{children}</main>
-        <Footer />
         {/* Only enable analytics in production */}
         {process.env.NODE_ENV === "production" && (
           <>
