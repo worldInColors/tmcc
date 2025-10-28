@@ -47,8 +47,8 @@ export default function RootLayout({
     <html lang="en" className={`${spaceGrotesk.variable} dark`}>
       <body className="font-space-grotesk antialiased bg-background">
         {children}
-        <Analytics />
-        <SpeedInsights />
+        {/* <Analytics /> */}
+        {/* <SpeedInsights /> */}
       </body>
     </html>
   );
