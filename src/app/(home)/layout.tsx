@@ -87,13 +87,6 @@ export default function RootLayout({
         <main className="min-h-screen">{children}</main>
         <Footer />
         {/* Only enable analytics in production */}
-        {process.env.NODE_ENV === "production" && (
-          <>
-            <Analytics />
-            <SpeedInsights />
-          </>
-        )}
-        \
       </body>
     </html>
   );
