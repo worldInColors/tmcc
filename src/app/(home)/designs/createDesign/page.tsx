@@ -15,6 +15,5 @@ export default async function CreateDesignPage() {
 
   const isArchiver = hasRole(userRoles, process.env.DISCORD_ARCHIVER_ROLE_ID!);
   if (!isArchiver) redirect("/designs");
-  // pass it to the client component
   return <CreateDesignForm isArchiver={isArchiver} />;
 }

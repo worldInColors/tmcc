@@ -1,7 +1,5 @@
 import { auth, signOut } from "@/auth";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
-import fs from "fs";
-import path from "path";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -17,11 +15,22 @@ function fallbackTwoLetters(name: string) {
   return name.slice(0, 2).toUpperCase();
 }
 
-function pickRandomFileFromFolder(folderPath: string) {
-  const files = fs.readdirSync(folderPath);
-  if (files.length === 0) return null;
-  const randomIndex = Math.floor(Math.random() * files.length);
-  return files[randomIndex];
+const AVATARS = [
+  "/avatars/Hearts-Black.png",
+  "/avatars/Hearts-Blue.png",
+  "/avatars/Hearts-Gray.png",
+  "/avatars/Hearts-Green.png",
+  "/avatars/Hearts-Indigo.png",
+  "/avatars/Hearts-Orange.png",
+  "/avatars/Hearts-Pink.png",
+  "/avatars/Hearts-Red.png",
+  "/avatars/Hearts-Violet.png",
+  "/avatars/Hearts-Yellow.png",
+];
+
+function getRandomAvatar(): string {
+  const randomIndex = Math.floor(Math.random() * AVATARS.length);
+  return AVATARS[randomIndex];
 }
 
 export default async function UserAvatar() {
@@ -30,9 +39,7 @@ export default async function UserAvatar() {
   let avatarSrc = session?.user.image;
 
   if (!avatarSrc) {
-    const avatarsFolder = path.join(process.cwd(), "public", "avatars");
-    const randomAvatar = pickRandomFileFromFolder(avatarsFolder);
-    avatarSrc = randomAvatar ? `/avatars/${randomAvatar}` : undefined;
+    avatarSrc = getRandomAvatar();
   }
 
   if (!session) {
