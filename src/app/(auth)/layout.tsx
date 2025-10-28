@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import { Space_Grotesk } from "next/font/google";
 import "../globals.css";
-import { SpeedInsights } from "@vercel/speed-insights/next";
-import { Analytics } from "@vercel/analytics/next";
+
 import { domain } from "@/paths";
 
 const spaceGrotesk = Space_Grotesk({
@@ -75,13 +74,6 @@ export default function AuthLayout({
     <html lang="en" className={`${spaceGrotesk.variable} dark`}>
       <body className="font-space-grotesk antialiased bg-background">
         <main className="min-h-screen">{children}</main>
-        {/* Only enable analytics in production */}
-        {process.env.NODE_ENV === "production" && (
-          <>
-            <Analytics />
-            <SpeedInsights />
-          </>
-        )}
       </body>
     </html>
   );

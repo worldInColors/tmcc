@@ -4,8 +4,7 @@ import "@/app/globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import SearchModal from "@/components/SearchModal";
-import { SpeedInsights } from "@vercel/speed-insights/next";
-import { Analytics } from "@vercel/analytics/next";
+
 import { domain } from "@/paths";
 
 const spaceGrotesk = Space_Grotesk({
