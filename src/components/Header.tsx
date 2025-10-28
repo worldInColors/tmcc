@@ -1,7 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import Dock from "./ui/Dock";
-import { auth } from "@/auth";
 import UserAvatar from "./UserAvatar";
 import HeaderNav from "./HeaderNav";
 
